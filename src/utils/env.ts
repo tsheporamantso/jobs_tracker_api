@@ -6,3 +6,5 @@ const getEnvVariable = (key: string): string => {
   }
   return value;
 };
+
+export default getEnvVariable;

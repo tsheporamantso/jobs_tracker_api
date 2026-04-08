@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const getEnvVariable = (key) => {
     const value = process.env[key];
     if (!value) {
@@ -6,3 +7,4 @@ const getEnvVariable = (key) => {
     }
     return value;
 };
+exports.default = getEnvVariable;
