@@ -7,8 +7,10 @@ require("dotenv").config();
 const express_1 = __importDefault(require("express"));
 const connect_1 = __importDefault(require("./db/connect"));
 const env_1 = __importDefault(require("./utils/env"));
+const not_found_1 = require("./middleware/not-found");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.use(not_found_1.notFound);
 const port = process.env.PORT || 3000;
 const start = async () => {
     try {

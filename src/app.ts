@@ -2,11 +2,15 @@ require("dotenv").config();
 import express from "express";
 import connectDB from "./db/connect";
 import getEnvVariable from "./utils/env";
+import { notFound } from "./middleware/not-found";
 
 const app = express();
 
 // body parser
 app.use(express.json());
+
+// middleware
+app.use(notFound);
 
 const port = process.env.PORT || 3000;
 
