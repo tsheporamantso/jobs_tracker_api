@@ -5,7 +5,7 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (
   err,
   req,
   res,
-  next,
+  _next,
 ) => {
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     msg: "Something went wrong please try again",
