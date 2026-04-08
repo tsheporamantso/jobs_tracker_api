@@ -3,6 +3,7 @@ import express from "express";
 import connectDB from "./db/connect";
 import getEnvVariable from "./utils/env";
 import { notFound } from "./middleware/not-found";
+import { errorHandlerMiddleware } from "./middleware/error-handler";
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // middleware
 app.use(notFound);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 3000;
 
