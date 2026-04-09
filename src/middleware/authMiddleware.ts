@@ -3,14 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { UnauthenticatedError } from "../errors/unauthenticated";
 import getEnvVariable from "../utils/env";
 
-type AuthRequest = Request & {
-  user?: {
-    userId: string;
-    name: string;
-  };
-};
-
-interface JWTPayloadType {
+export interface JWTPayloadType {
   userId: string;
   name: string;
 }
@@ -32,8 +25,7 @@ export const authentication = async (
       token,
       getEnvVariable("JWT_SECRET"),
     ) as JWTPayloadType;
-    const authReq = req as AuthRequest;
-    authReq.user = { userId: payload.userId, name: payload.name };
+    req.user = { userId: payload.userId, name: payload.name };
     next();
   } catch (error) {
     console.log(error);
