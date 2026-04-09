@@ -28,6 +28,11 @@ export const login: AsyncController = asyncWrapper(async (req, res) => {
   if (!user) {
     throw new UnauthenticatedError("Invalid Credentials");
   }
+  const isPasswordCorrect = await user.comparePassword(password);
+
+  if (!isPasswordCorrect) {
+    throw new UnauthenticatedError("Invalid Credentials");
+  }
   const token = user.createJWT();
 
   res.status(StatusCodes.OK).json({
