@@ -5,11 +5,13 @@ import { AsyncController } from "../types/asyncController";
 
 export const register: AsyncController = asyncWrapper(async (req, res) => {
   const user = await User.create({ ...req.body });
+  const token = user.createJWT();
 
   res.status(StatusCodes.CREATED).json({
     success: true,
     msg: "User registered in successfully",
-    user,
+    user: { name: user.name },
+    token,
   });
 });
 
