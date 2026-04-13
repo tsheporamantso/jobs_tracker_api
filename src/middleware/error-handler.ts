@@ -22,7 +22,7 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (
   if (err.code === 11000) {
     return res
       .status(StatusCodes.CONFLICT)
-      .json({ msg: "Email already in use" });
+      .json({ msg: `Email: ${Object.values(err.keyValue)}, already in use.` });
   }
 
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
