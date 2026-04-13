@@ -1,14 +1,21 @@
 import "dotenv/config";
 import express from "express";
 import connectDB from "./db/connect";
+import jobsRouter from "./routes/jobs";
+import authRouter from "./routes/auth";
 import getEnvVariable from "./utils/env";
 import { notFound } from "./middleware/not-found";
+import { authentication } from "./middleware/authMiddleware";
 import { errorHandlerMiddleware } from "./middleware/error-handler";
 
 const app = express();
 
 // body parser
 app.use(express.json());
+
+// routes
+app.use("/api/v1/jobs", authentication, jobsRouter);
+app.use("/api/v1/auth", authRouter);
 
 // middleware
 app.use(notFound);
