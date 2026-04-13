@@ -19,7 +19,7 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (
       .json({ msg: message.join(", ") });
   }
 
-  if ((err as any).code === 1100) {
+  if (err.code === 11000) {
     return res
       .status(StatusCodes.CONFLICT)
       .json({ msg: "Email already in use" });
