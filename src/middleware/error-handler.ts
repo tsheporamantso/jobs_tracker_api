@@ -13,16 +13,22 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (
     return res.status(err.statusCode).json({ msg: err.message });
   }
   if (err instanceof mongoose.Error.ValidationError) {
-    const message = Object.values(err.errors).map((e) => e.message);
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ msg: message.join(", ") });
+    const message = Object.values(err.errors)
+      .map((e) => e.message)
+      .join(", ");
+    return res.status(StatusCodes.BAD_REQUEST).json({ msg: message });
   }
 
   if (err.code === 11000) {
     return res
       .status(StatusCodes.CONFLICT)
       .json({ msg: `Email: ${Object.values(err.keyValue)}, already in use.` });
+  }
+
+  if (err.name === "CastError") {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ msg: `No item found with id: ${err.value}` });
   }
 
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
