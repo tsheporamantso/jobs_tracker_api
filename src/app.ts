@@ -12,6 +12,11 @@ import cors from "cors";
 import helmet from "helmet";
 import { limiter } from "./middleware/rateLimiter";
 
+// swagger
+import swaggerUI from "swagger-ui-express";
+import YAML from "yamljs";
+const swaggerDocument = YAML.load("./swagger.yaml");
+
 const app = express();
 
 // body parser
@@ -24,6 +29,8 @@ app.use(limiter);
 // routes
 app.use("/api/v1/jobs", authentication, jobsRouter);
 app.use("/api/v1/auth", authRouter);
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // middleware
 app.use(notFound);
