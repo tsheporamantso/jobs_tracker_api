@@ -6,7 +6,9 @@ import { NotFoundError } from "../errors/not-found";
 import { AsyncController } from "../types/asyncController";
 
 export const getAllJobs: AsyncController = asyncWrapper(async (req, res) => {
-  const jobs = await Job.find({ createdBy: req.user?.userId });
+  const jobs = await Job.find({ createdBy: req.user?.userId }).sort(
+    "-createdAt",
+  );
 
   res.status(StatusCodes.OK).json({
     success: true,
