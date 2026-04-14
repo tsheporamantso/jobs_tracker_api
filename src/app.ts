@@ -8,10 +8,18 @@ import { notFound } from "./middleware/not-found";
 import { authentication } from "./middleware/authMiddleware";
 import { errorHandlerMiddleware } from "./middleware/error-handler";
 
+import cors from "cors";
+import helmet from "helmet";
+import { limiter } from "./middleware/rateLimiter";
+
 const app = express();
 
 // body parser
 app.use(express.json());
+
+app.use(cors());
+app.use(helmet());
+app.use(limiter);
 
 // routes
 app.use("/api/v1/jobs", authentication, jobsRouter);
